@@ -25,16 +25,24 @@ var LXMATH = (function () {
       if (options.split === 512) {
         return Math.floor((i - options.unistart) / options.split) + options.unistart;
       }
-      if (options.split === 256) {
+      else if (options.split === 256) {
         return Math.floor(i / options.split);
+      }
+      else {
+        console.log("options.split out of range");
+        return i;
       }
     },
     little: function (i) {
       if (options.split === 512) {
         return (i - options.addrstart) % options.split + options.addrstart;
       }
-      if (options.split === 256) {
+      else if (options.split === 256) {
         return (i % options.split);
+      }
+      else {
+        console.log("options.split out of range");
+        return i;
       }
     }
   };
@@ -144,21 +152,23 @@ var LXMATH = (function () {
   "use strict";
   // Setting up event handlers.
 
-  window.onpopstate = function () {
+  function loadFormFromURL (event) {
     // Function to parse info in the current url into the form.
-    var oldurl = document.location.toString().replace(/\+/g, " ").replace(/%2c/g, ","),
+    var oldurl = document.location.search.replace(/\+/g, " ").replace(/%2c/g, ","),
       dmxvalregex = /(?:dmxvalues=)((\d| |,|-|\/)*)/g,
       numtyperegex = /(?:numbertype=)(dmx-address|dmx-value)/g,
       showswitchregex = /(?:dipswitch=)(show-switch)/g,
       dmxval = dmxvalregex.exec(oldurl),
       numtype = numtyperegex.exec(oldurl),
       showswitch = showswitchregex.exec(oldurl);
+    console.log(event);
     document.forms.formin.dmxvalues.value = dmxval && dmxval[1];
     document.formin.numbertype.value = numtype && numtype[1];
     document.formin.dipswitch.checked = showswitch && showswitch[1] ? true : false;
     LXMATH.mathify();
   };
 
+  window.addEventListener('load', loadFormFromURL, false);
   document.formin.addEventListener('submit', LXMATH.procform, false);
   document.formin.dmxvalues.addEventListener('keyup', LXMATH.keyup, false);
   document.formin.dipswitch.addEventListener('click', LXMATH.clicky, false);
