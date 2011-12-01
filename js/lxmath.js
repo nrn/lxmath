@@ -161,7 +161,6 @@ var LXMATH = (function () {
       dmxval = dmxvalregex.exec(oldurl),
       numtype = numtyperegex.exec(oldurl),
       showswitch = showswitchregex.exec(oldurl);
-    console.log(event);
     document.forms.formin.dmxvalues.value = dmxval && dmxval[1];
     document.formin.numbertype.value = numtype && numtype[1];
     document.formin.dipswitch.checked = showswitch && showswitch[1] ? true : false;
@@ -169,6 +168,7 @@ var LXMATH = (function () {
   };
 
   window.addEventListener('load', loadFormFromURL, false);
+  window.addEventListener('popstate', loadFormFromURL, false);
   document.formin.addEventListener('submit', LXMATH.procform, false);
   document.formin.dmxvalues.addEventListener('keyup', LXMATH.keyup, false);
   document.formin.dipswitch.addEventListener('click', LXMATH.clicky, false);
