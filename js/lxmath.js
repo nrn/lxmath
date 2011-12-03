@@ -94,9 +94,9 @@ var LXMATH = (function () {
       realaddress = crunch.little(individual[i]);
       output += "<td>" + realaddress + "</td>";
       if (options.split === 512 && options.switches) {
-        binaryout = realaddress.toString(2).slice(-9);
+        binaryout = realaddress.toString(2).slice(-9).split("").reverse().join("");
         for (j = 9 - binaryout.length; j > 0; j += -1) {
-          binaryout = "0" + binaryout;
+          binaryout = binaryout + "0";
         }
         output += "<td>" + binaryout + "</td>";
       }
@@ -141,7 +141,7 @@ var LXMATH = (function () {
   };
 
   itself.lxmath = itself;
-  itself.edition = '2011-11-30';
+  itself.edition = '2011-12-2';
   // Everything to be available globally is assigned to itself, which
   // is returned and assigned to LXMATH
   return itself;
